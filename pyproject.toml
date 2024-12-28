@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "admission-prediction"
+version = "0.1.0"
+description = "A FastAPI-based service for admission and college prediction"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+jinja2 = "^3.0"
+fastapi = "^0.100.0"
+uvicorn = "^0.23.0"
+scikit-learn = "^1.4.0"
+joblib = "^1.3.0"
+numpy = "^1.26.0"
+pandas = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.6.0"]
+build-backend = "poetry.core.masonry.api"

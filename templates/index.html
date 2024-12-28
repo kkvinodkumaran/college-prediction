@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Prediction</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 50px;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 30px;
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Result Output */
+        .result-container {
+            background-color: #e7f7e7;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .result-container p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            .result-container p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Admission Prediction</h2>
+
+    <div class="form-container">
+        <form id="prediction-form">
+            <label for="academic_score">Academic Score:</label>
+            <input type="number" id="academic_score" name="academic_score" required><br>
+
+            <label for="exam_score">Exam Score:</label>
+            <input type="number" id="exam_score" name="exam_score" required><br>
+
+            <label for="extracurricular_score">Extracurricular Score:</label>
+            <input type="number" id="extracurricular_score" name="extracurricular_score" required><br>
+
+            <button type="submit">Predict Admission</button>
+        </form>
+    </div>
+
+    <div class="result-container" style="display: none;" id="result-container">
+        <h3>Prediction Result:</h3>
+        <p id="admission-result"></p>
+        <p id="college-result"></p>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const academic_score = document.getElementById('academic_score').value;
+            const exam_score = document.getElementById('exam_score').value;
+            const extracurricular_score = document.getElementById('extracurricular_score').value;
+
+            const response = await fetch('/predict_admission', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    academic_score,
+                    exam_score,
+                    extracurricular_score,
+                }),
+            });
+
+            const result = await response.json();
+            document.getElementById('college-result').textContent = "College: " + result.college;
+
+            document.getElementById('result-container').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
